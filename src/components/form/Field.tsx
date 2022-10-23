@@ -26,6 +26,11 @@ const Field = <InputProps,>({
       return;
     }
 
+    if ('checked' in eventOrValue.target && eventOrValue.target.type === 'checkbox') {
+      setValue(eventOrValue.target.checked);
+      return;
+    }
+
     setValue(eventOrValue.target.value);
   };
 
@@ -34,11 +39,12 @@ const Field = <InputProps,>({
     onChange,
     value,
     name,
+    id: name,
   } as InputProps;
 
   return (
     <FormGroup className="mb-3">
-      {label && <Label>{label}</Label>}
+      {label && <Label htmlFor={name}>{label}</Label>}
       <Component {...newProps}>{children}</Component>
     </FormGroup>
   );

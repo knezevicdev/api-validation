@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, FC, ComponentProps } from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import cities from '../../../data/cities.json';
+import cities from '../../data/cities.json';
 
 type Street = typeof cities[keyof typeof cities][number];
 

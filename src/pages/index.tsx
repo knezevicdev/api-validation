@@ -1,8 +1,9 @@
-import type {NextPage} from 'next'
-import Form from "../components/shared/form/Form";
-import Field from "../components/shared/form/Field";
-import {Button, Container, Input} from "reactstrap";
-import AddressInput from "../components/shared/inputs/AddressInput";
+import type { NextPage } from 'next';
+import Form from '../components/form/Form';
+import Field from '../components/form/Field';
+import { Button, Container, Input } from 'reactstrap';
+import AddressInput from '../components/inputs/AddressInput';
+import submit from '../api/submit';
 
 const Home: NextPage = () => {
   return (
@@ -13,8 +14,17 @@ const Home: NextPage = () => {
           lastName: '',
           email: '',
           address: '',
+          dateOfBirth: '',
+          subscribe: false,
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values) => {
+          try {
+            const response = await submit(values);
+            console.log(response.name);
+          } catch (e) {
+            console.error('error while submitting...', e);
+          }
+        }}
       >
         <Field
           as={Input}
@@ -44,6 +54,15 @@ const Home: NextPage = () => {
           label="Email"
         />
         <Field
+          as={Input}
+          inputProps={{
+            type: 'date',
+            placeholder: 'Date of birth',
+          }}
+          name="dateOfBirth"
+          label="Date of birth"
+        />
+        <Field
           as={AddressInput}
           inputProps={{
             city: 'Eisenstadt',
@@ -52,12 +71,21 @@ const Home: NextPage = () => {
           name="address"
           label="Street"
         />
+        <Field
+          as={Input}
+          inputProps={{
+            type: 'checkbox',
+            placeholder: 'Email',
+          }}
+          name="subscribe"
+          label="Subscribe to newsletter"
+        />
         <Button variant="primary" type="submit">
           Submit
         </Button>
       </Form>
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
